@@ -1,5 +1,9 @@
 import React from "react";
-import { Code2, Activity, Cpu, Layers, Network, Binary } from "lucide-react";
+import { Code2, Activity, Cpu, Layers, Network, Binary, School, SchoolIcon } from "lucide-react";
+import { MdSchool, MdSupportAgent } from "react-icons/md";
+import { FcCustomerSupport, FcSupport } from "react-icons/fc";
+import { SiStudyverse } from "react-icons/si";
+import { FaSchool } from "react-icons/fa";
 
 const ExperienceCard = ({
   title,
@@ -8,14 +12,15 @@ const ExperienceCard = ({
   description,
   icon: Icon,
 }) => (
-  <div className="group relative overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
+  <div 
+     className="group relative overflow-hidden transform hover:-translate-y-2 hover:scale-[1.03] transition-all duration-500 ease-out hover:shadow-[0_10px_30px_rgba(0,255,255,0.2)]">
     {/* Glass morphism effect */}
     <div className="absolute inset-0 backdrop-blur-lg bg-white/5 rounded-lg" />
 
     {/* Animated gradient border */}
-    <div className="absolute -inset-[2px] bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 animate-gradient-xy transition-all duration-500" />
+    <div  className="absolute -inset-[2px] bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 animate-gradient-xy transition-all duration-500" />
 
-    <div className="relative bg-gray-900/90 rounded-lg p-8 h-full border border-gray-800/50 shadow-xl backdrop-blur-xl">
+    <div  className="relative bg-gray-900/90 rounded-lg p-8 h-full border border-gray-800/50 shadow-xl backdrop-blur-xl">
       {/* Floating icon with pulse effect */}
       <div className="relative mb-6">
         <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-25 rounded-full blur-xl group-hover:opacity-75 animate-pulse transition-all duration-500" />
@@ -54,39 +59,40 @@ const ExperienceCard = ({
 const ExperienceSection = () => {
   const experiences = [
     {
-      icon: Network,
-      title: "WordPress Developer",
-      company: "Fiverr",
-      period: "2019 - 2020",
+      icon: MdSupportAgent,
+      title: "IT Technical Support",
+      company: "Arauco NA",
+      period: "April 2025 - May 2025",
       description:
-        "Worked on developing and customizing WordPress websites for clients globally.",
+        "Provided technical support for Windows systems, Microsoft 365 apps, and networked printers.",
     },
     {
-      icon: Layers,
-      title: "Junior Frontend Developer",
-      company: "Sera Programmer",
-      period: "2021 - 2023",
+      icon: MdSchool,
+      title: "Network Administration Student",
+      company: "NBCC",
+      period: "Sep 2023 - April 2025",
       description:
-        "Assisted in building and optimizing user interfaces with a focus on responsive and interactive designs.",
+        "Designed and deployed a hybrid network solution integrating Azure and Windows Server with Cisco infrastructure, configured Active Directory and Microsoft 365 services.",
     },
     {
-      icon: Code2,
-      title: "JavaScript Developer",
-      company: "OlovJS (Sera Programmer)",
-      period: "2023 - Present",
+      icon: MdSupportAgent,
+      title: "IT Support Assistant",
+      company: "Challenge Solutions",
+      period: "June 2021 - Nov 2022",
       description:
-        "Contributed to developing JavaScript libraries and enhancing framework functionalities.",
+        "Supported network monitoring, hardware maintenance, device setups, and basic router/switch configurations while resolving IT issues and managing tickets.",
     },
   ];
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b relative overflow-hidden pt-32 pb-20">
+      <div id="experience" className="min-h-screen bg-gradient-to-b relative overflow-hidden pt-8 pb-20">
+         
         {/* Animated gradient background */}
         <div className="absolute inset-0 bg-[#04081A]" />
 
         {/* Grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(50,50,70,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(50,50,70,0.15)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
+        <div  className="absolute inset-0 bg-[linear-gradient(rgba(50,50,70,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(50,50,70,0.15)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
 
         {/* Animated particles */}
         <div className="absolute inset-0">
@@ -104,17 +110,17 @@ const ExperienceSection = () => {
         </div>
 
         {/* Content container */}
-        <div className="relative container mx-auto px-6 mt-10">
+        <div className="relative container mx-auto px-6 mt-20">
           {/* Section header with enhanced effects */}
           <div className="flex flex-col items-center space-y-8 mb-20">
             <div className="relative">
-              <h2 className="text-5xl md:text-7xl font-black text-transparent bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-center">
-                Professional Journey
+              <h2 className="text-4xl md:text-5xl font-black text-transparent bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-center">
+                PROFESSIONAL JOURNEY
               </h2>
               <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-3xl rounded-full" />
             </div>
             <p className="text-lg md:text-xl text-gray-400 font-medium tracking-wide text-center max-w-2xl">
-              "Transforming ideas into digital reality, one project at a time"
+              "Bridging technology and business—one resilient network at a time"
             </p>
           </div>
 

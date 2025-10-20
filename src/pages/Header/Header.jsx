@@ -9,107 +9,156 @@ import {
   FaEnvelope,
   FaBars,
 } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link as ScrollLink, scroller, Events, scrollSpy } from "react-scroll";
 
 export default function Header() {
-  const location = useLocation();
-  const [activeLink, setActiveLink] = useState(() => {
-    const path = location.pathname.substring(1) || "home";
-    return path;
-  });
+  const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [scrollY, setScrollY] = useState(0);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+
+  const navLinks = [
+    { id: "home", icon: FaHome, text: "Home" },
+    { id: "skills", icon: FaCode, text: "Skills" },
+    { id: "projects", icon: FaLaptopCode, text: "Projects" },
+    { id: "experience", icon: FaBriefcase, text: "Experience" },
+    { id: "about", icon: FaUser, text: "AboutMe" },
+    { id: "contact", icon: FaEnvelope, text: "Contact" },
+  ];
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const handleScroll = () => {
+      /**const scrollTop = window.scrollY;
+      setScrollY(scrollTop); **/
+
+      const sections = ["home", "skills", "projects", "experience", "about", "contact"];
+  for (let section of sections) {
+    const el = document.getElementById(section);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        setActiveLink(section);
+        break;
+      }
+    }
+  }
+      
+    };
+    
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+
+    Events.scrollEvent.register("end", () => {});
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      Events.scrollEvent.remove("end");
+    };
   }, []);
 
-  const navLinks = [
-    { id: "home", icon: FaHome, text: "Home", path: "/" },
-    { id: "skills", icon: FaCode, text: "Skills", path: "/skills" },
-    {
-      id: "experience",
-      icon: FaBriefcase,
-      text: "Experience",
-      path: "/experience",
-    },
-    {
-      id: "education",
-      icon: FaGraduationCap,
-      text: "Education",
-      path: "/education",
-    },
-    { id: "projects", icon: FaLaptopCode, text: "Projects", path: "/projects" },
-    { id: "contact", icon: FaEnvelope, text: "Contact", path: "/contact" },
-  ];
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const target = hash.replace("#", "");
+      setActiveLink(target);
+      const el = document.getElementById(target);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const target = hash.replace("#", "");
+        setActiveLink(target);
+        setTimeout(() => {
+          scroller.scrollTo(target, {
+            duration: 700,
+            delay: 0,
+            smooth: "easeInOutQuart",
+            offset: 0,
+          });
+        }, 100);
+      }
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    const handleProjectDetailToggle = (event) => {
+      const { isOpen } = event.detail;
+      setIsHeaderVisible(!isOpen);
+    };
+
+    window.addEventListener("project-detail-view", handleProjectDetailToggle);
+    return () => {
+      window.removeEventListener("project-detail-view", handleProjectDetailToggle);
+    };
+  }, []);
+
+  const handleSetActive = (id) => {
+    setActiveLink(id);
+    window.history.replaceState(null, null, `#${id}`);
+    setIsMenuOpen(false);
+  };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-gray-900/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none">
-      <div className="md:fixed md:top-4 md:left-1/2 md:transform md:-translate-x-1/2 w-full md:w-auto">
-        <div className="p-[2px] md:rounded-full bg-gradient-to-r from-emerald-400 via-cyan-500 to-indigo-500 animate-gradient-x">
-          <nav className="bg-gray-900/90 backdrop-blur-md md:rounded-full px-4 md:px-6 py-2.5">
-            {/* Mobile Menu Button */}
-            <div className="flex justify-between items-center md:hidden px-2">
-              <Link to="/" className="text-white font-bold">Portfolio</Link>
-              <button 
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white p-2"
-              >
-                <FaBars />
-              </button>
-            </div>
+    <header
+      className={`fixed top-1 left-0 w-full z-40 transition-transform duration-500 ease-in-out transform ${scrollY > 30 ? "scale-[0.98] shadow-2xl" : "scale-100"} ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}
+    >
+      <div
+        className="backdrop-blur-sm border border-white/10 shadow-xl rounded-lg mx-auto max-w-fit mt-4 px-4 py-2.5"
+        style={{ backgroundColor: "rgba(17, 24, 39, 0.02)" }}
+      >
+        <div className="flex justify-between items-center md:hidden px-2">
+          <span className="text-white font-bold">Portfolio</span>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white p-2"
+          >
+            <FaBars />
+          </button>
+        </div>
 
-            {/* Navigation Links */}
-            <div className={`${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-1 lg:gap-2 py-4 md:py-0">
-                {navLinks.map(({ id, icon: Icon, text, path }) => (
-                  <Link
-                    key={id}
-                    to={path}
-                    onClick={() => {
-                      setActiveLink(id);
-                      setIsMenuOpen(false);
-                    }}
-                    className={`px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium
-                      transition-all duration-300 flex items-center gap-2
-                      hover:bg-white/10 
-                      ${
-                        activeLink === id
-                          ? "bg-white/15 text-white"
-                          : "text-gray-300 hover:text-white"
-                      }
-                    `}
-                  >
-                    <Icon
-                      className={`text-base ${
-                        activeLink === id ? "scale-110" : ""
-                      }`}
-                    />
-                    <span className="inline">{text}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </nav>
+        <div className={`${isMenuOpen ? "block" : "hidden"} md:block`}>
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-1 lg:gap-2 py-4 md:py-0">
+            {navLinks.map(({ id, icon: Icon, text }) => (
+              <ScrollLink
+                key={id}
+                to={id}
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={700}
+                isDynamic={true}
+                hashSpy={true}
+                onSetActive={handleSetActive}
+                className={`px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium transition-all duration-500 ease-in-out flex items-center gap-2 
+                  hover:bg-white/10 hover:scale-105 hover:shadow-md cursor-pointer 
+                  ${
+                    activeLink === id
+                      ? "bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg ring-2 ring-blue-400 hover:scale-110 hover:rotate-1"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+              >
+                <Icon
+                  className={`text-base transition-transform duration-300 ${
+                    activeLink === id ? "scale-110 rotate-1" : ""
+                  }`}
+                />
+                <span>{text}</span>
+              </ScrollLink>
+            ))}
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes gradient-x {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        .animate-gradient-x {
-          animation: gradient-x 3s linear infinite;
-          background-size: 200% 200%;
-        }
-      `}</style>
     </header>
   );
 }

@@ -58,8 +58,8 @@ const EducationSection = () => {
     },
   };
 
-  return (
-    <section className="min-h-screen relative overflow-hidden py-40 bg-[#04081A]">
+  return ( 
+    <section id="education" className="min-h-screen relative overflow-hidden py-40 bg-[#04081A] pt-8 pb-20">
       {/* Grid Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:50px_50px]" />
@@ -77,7 +77,7 @@ const EducationSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent mb-6">
             Educational Journey
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg font-medium">
             Discover how academic excellence shapes innovative thinking and
             professional growth.
           </p>

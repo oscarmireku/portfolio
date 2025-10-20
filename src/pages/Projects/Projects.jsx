@@ -1,294 +1,372 @@
-import { ReactLenis } from "lenis/react";
-import { useTransform, motion, useScroll } from "framer-motion";
-import { useRef, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Link, Share2 } from 'lucide-react';
+import { scroller } from "react-scroll";
 
+
+
+// Helper function to create a URL-friendly slug from a title
+const createSlug = (title) => title.toLowerCase().replace(/\s+/g, '-').replace(/[!?,.:;'"()]/g, '');
+
+
+
+// Data for the projects, with an added 'longDescription' and 'date' for the detail page.
 const projects = [
   {
     title: "Olova! A Lightweight JavaScript Library",
-    description:
-      "A lightweight JavaScript library for creating beautiful, responsive UI components.",
-    src: "rock.jpg",
-    link: "https://i.postimg.cc/DwgWTfP0/Annotation-2025-03-19-113338.png",
-    color: "#5196fd",
-    githubLink: "https://github.com/olovajs/olova",
-    liveLink: "https://olova.js.org/",
+    description: "A lightweight JavaScript library for creating beautiful, responsive UI components.",
+    date: "2025-03-19",
+    longDescription: `
+        <p>Olova! is a passion project aimed at simplifying front-end development. It provides a set of minimalistic, highly customizable UI components that are easy to integrate into any JavaScript project. The library is built with <strong>performance in mind</strong>, ensuring a small footprint and fast rendering times. The goal was to create a developer-friendly tool that speeds up the creation of elegant user interfaces without the bloat of larger frameworks.</p>
+        <p><em>The core philosophy is to provide unstyled, accessible components that give developers full control over the look and feel.</em></p>
+        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=Component+Code+Snippet" alt="Sample code snippet" class="rounded-lg my-4" />
+        <blockquote>"Olova! strips away the complexity, letting you build beautiful UIs with simple, predictable building blocks."</blockquote>
+        <p>It's not just another component library; it's a statement against the complexity of modern web development. It’s about getting back to basics and writing clean, maintainable code.</p>
+    `,
+    image: "https://i.postimg.cc/DwgWTfP0/Annotation-2025-03-19-113338.png",
+    github: "https://github.com/olovajs/olova",
+    live: "https://olova.js.org/",
+    tags: ["JavaScript", "UI/UX", "Frontend", "Library"]
   },
   {
-    title: "A sleek portfolio built with React and Tailwind CSS ",
-    description:
-      "A sleek portfolio built with React and Tailwind CSS to showcase your skills, projects, and experience in a modern design.",
-    src: "tree.jpg",
-    link: "https://i.postimg.cc/J75CKyrs/Annotation-2025-04-01-203959.png",
-    color: "#8f89ff",
-    githubLink: "https://github.com/seraprogrammer/portfolio",
-    liveLink: "https://codervai.vercel.app",
+    title: "Sleek Portfolio",
+    description: "A sleek portfolio built with React and Tailwind CSS to showcase your skills and projects.",
+    date: "2025-04-01",
+    longDescription: `
+        <p>This portfolio itself is a project designed to showcase my abilities in modern web development. Built with <strong>React</strong>, <strong>Tailwind CSS</strong>, and <em>Framer Motion</em>, it features a clean, responsive design with smooth, engaging animations.</p>
+        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=Portfolio+Animation+Demo" alt="Portfolio animation" class="rounded-lg my-4" />
+        <p>The focus was on creating a visually appealing and easy-to-navigate site that effectively highlights my skills, projects, and professional experience to potential employers and collaborators. Every interaction, from the page transitions to the hover effects, has been carefully crafted to create a delightful user experience.</p>
+        <blockquote>The design is intentionally minimal to let the projects and content speak for themselves.</blockquote>
+    `,
+    image: "https://i.postimg.cc/J75CKyrs/Annotation-2025-04-01-203959.png",
+    github: "https://github.com/seraprogrammer/portfolio",
+    live: "https://codervai.vercel.app",
+    tags: ["React", "Tailwind CSS", "Framer Motion", "Portfolio"]
   },
   {
-    title: "🚀 CodeWhisperer",
-    description:
-      "🚀 CodeWhisperer A powerful online code editor built with React and Tailwind CSS. Featuring real-time code execution, syntax highlighting, multi-language support, and a sleek UI. Start coding instantly! 💻✨",
-    src: "water.jpg",
-    link: "https://i.postimg.cc/J4jPVFY0/Annotation-2025-04-01-204723.png",
-    color: "#fff",
-    githubLink: "https://github.com/seraprogrammer/codewhisperer",
-    liveLink: "https://codewhisperer.vercel.app/",
+    title: "CodeWhisperer",
+    description: "A powerful online code editor with real-time code execution and multi-language support.",
+    date: "2025-04-01",
+    longDescription: `
+        <p>CodeWhisperer is an ambitious project to create a versatile online IDE. It supports multiple programming languages with features like syntax highlighting, real-time code execution, and collaborative editing. The backend is powered by a robust containerization system using <strong>Docker</strong> to safely execute user-submitted code, while the frontend communicates in real-time using <strong>Web Sockets</strong>.</p>
+        <p>The frontend, built with React, provides a seamless and intuitive coding environment directly in the browser. <em>It's designed to be fast, responsive, and accessible from any device.</em></p>
+        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=CodeWhisperer+UI" alt="CodeWhisperer Interface" class="rounded-lg my-4" />
+        <blockquote>Future plans include adding support for more languages, version control integration, and a marketplace for extensions.</blockquote>
+    `,
+    image: "https://i.postimg.cc/J4jPVFY0/Annotation-2025-04-01-204723.png",
+    github: "https://github.com/seraprogrammer/codewhisperer",
+    live: "https://codewhisperer.vercel.app/",
+    tags: ["React", "Node.js", "Docker", "Web Sockets", "IDE"]
   },
   {
-    title: "CodeKori 🔥",
-    description:
-      "CodeKori is a powerful online code editor built with React and Tailwind CSS. Featuring real-time code execution, syntax highlighting, multi-language support, and a sleek UI. Start coding instantly! 💻✨",
-    src: "house.jpg",
-    link: "https://i.postimg.cc/cHQr4fpR/Annotation-2025-04-01-205350.png",
-    color: "#ed649e",
-    githubLink: "https://github.com/seraprogrammer/CodeKori",
-    liveLink: "https://codekori.js.org",
+    title: "CodeKori",
+    description: "A sleek, real-time code editor supporting syntax highlighting and a modern developer UI.",
+    date: "2025-04-01",
+    longDescription: `
+        <p>CodeKori is a lightweight, aesthetically pleasing code editor designed for simplicity and focus. Unlike more complex IDEs, CodeKori prioritizes a <strong>clean interface</strong> and <strong>fast performance</strong>. It's perfect for quick edits, learning new languages, or collaborative coding sessions.</p>
+        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=Theme+Customization" alt="Theme Customization" class="rounded-lg my-4" />
+        <p>It features a modern developer UI with customizable themes and syntax highlighting for several popular languages. <em>The entire experience is designed to be calm and focused, helping you get into a state of flow.</em></p>
+        <blockquote>"I love using CodeKori for my quick coding tasks. It's fast, beautiful, and doesn't get in my way." - A Happy User</blockquote>
+        <p>The project demonstrates a strong understanding of UI/UX principles and frontend performance optimization.</p>
+    `,
+    image: "https://i.postimg.cc/cHQr4fpR/Annotation-2025-04-01-205350.png",
+    github: "https://github.com/seraprogrammer/CodeKori",
+    live: "https://codekori.js.org",
+    tags: ["JavaScript", "Code Editor", "UI/UX", "Real-time"]
   },
 ];
 
-export default function Projects() {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"],
-  });
-
-  useEffect(() => {
-    // Add specific styles for 1366x768 resolution
-    const style = document.createElement("style");
-    style.textContent = `
-      @media screen and (width: 1366px) and (height: 768px),
-             screen and (width: 1367px) and (height: 768px),
-             screen and (width: 1368px) and (height: 769px) {
-        .project-card {
-          scale: 0.85;
-          margin-top: -5vh;
-        }
-        .project-container {
-          height: 90vh;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Resolution check function
-    const checkResolution = () => {
-      const isTargetResolution =
-        window.innerWidth >= 1360 &&
-        window.innerWidth <= 1370 &&
-        window.innerHeight >= 760 &&
-        window.innerHeight <= 775;
-
-      if (isTargetResolution) {
-        document.documentElement.style.setProperty("--project-scale", "0.85");
-        document.documentElement.style.setProperty("--project-margin", "-5vh");
-      } else {
-        document.documentElement.style.setProperty("--project-scale", "1");
-        document.documentElement.style.setProperty("--project-margin", "0");
-      }
-    };
-
-    checkResolution();
-    window.addEventListener("resize", checkResolution);
-
-    return () => {
-      document.head.removeChild(style);
-      window.removeEventListener("resize", checkResolution);
-    };
-  }, []);
-
+// Component for the grid of project cards
+function ProjectsGrid({ onProjectSelect }) {
   return (
-    <ReactLenis root>
-      <main className="bg-black" ref={container}>
-        <section className="text-white w-full bg-slate-950">
-          {projects.map((project, i) => {
-            const targetScale = 1 - (projects.length - i) * 0.05;
-            return (
-              <Card
-                key={`p_${i}`}
-                i={i}
-                url={project.link}
-                title={project.title}
-                color={project.color}
-                description={project.description}
-                progress={scrollYProgress}
-                range={[i * 0.25, 1]}
-                targetScale={targetScale}
-                githubLink={project.githubLink}
-                liveLink={project.liveLink}
-              />
-            );
-          })}
-        </section>
-      </main>
-    </ReactLenis>
+    <section id="projects" className="bg-slate-950 text-white py-24 px-6 min-h-screen">
+      <div className="max-w-6xl mx-auto">
+        <motion.h2 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-4xl md:text-5xl font-black text-transparent bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-center mb-12"
+        >
+          PROJECTS
+        </motion.h2>
+        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, idx) => (
+            <motion.div
+              key={idx}
+              layoutId={`card-container-${project.title}`}
+              className="bg-gray-900/80 rounded-xl shadow-lg overflow-hidden group cursor-pointer flex flex-col"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.1 }}
+              whileHover={{ scale: 1.03, boxShadow: '0px 10px 30px rgba(0, 255, 255, 0.1)' }}
+              onClick={() => onProjectSelect(project)}
+            >
+              <div className="overflow-hidden h-56">
+                <motion.img
+                  layoutId={`card-image-${project.title}`}
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x400/0f172a/94a3b8?text=Image+Not+Found'; }}
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-blue-400 transition-colors">
+                  {project.title}
+                </h3>
+                 <p className="text-gray-500 text-xs mb-2">
+                    {new Date(project.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                    })}
+                </p>
+                <p className="text-gray-400 text-sm mb-4 flex-grow">
+                  {project.description}
+                </p>
+                <div className="flex justify-end mt-auto">
+                    <span className="text-sm text-teal-400 group-hover:underline">View Details &rarr;</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-function Card({
-  i,
-  title,
-  description,
-  url,
-  color,
-  progress,
-  range,
-  targetScale,
-  githubLink,
-  liveLink,
-}) {
-  const container = useRef(null);
-  const scale = useTransform(progress, range, [1, targetScale]);
+// Component for the detailed project view (the "blog post" overlay)
+function ProjectDetail({ project, onBack }) {
+    // This effect prevents body scroll and dispatches events for the header
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        // Dispatch event to HIDE the header
+        window.dispatchEvent(new CustomEvent('project-detail-view', { detail: { isOpen: true } }));
+        
+        return () => {
+            document.body.style.overflow = 'unset';
+            // Dispatch event to SHOW the header
+            window.dispatchEvent(new CustomEvent('project-detail-view', { detail: { isOpen: false } }));
+        }; 
+    }, []);
+
+    // State and refs for scroll-based animation
+    const [isButtonVisible, setIsButtonVisible] = useState(true);
+    const lastScrollY = useRef(0);
+    const scrollContainerRef = useRef(null);
+
+    // State for the copy button text
+    const [copyText, setCopyText] = useState('Copy Link');
+
+    // Function to handle scroll events on the modal
+    const handleScroll = () => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            const currentScrollY = container.scrollTop;
+            if (currentScrollY < lastScrollY.current || currentScrollY < 100) {
+                setIsButtonVisible(true);
+            } else {
+                setIsButtonVisible(false);
+            }
+            lastScrollY.current = currentScrollY;
+        }
+    };
+
+    // Attach the scroll event listener to the modal
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll, { passive: true });
+            return () => container.removeEventListener('scroll', handleScroll);
+        }
+    }, []);
+
+    // Function to copy the project link to the clipboard
+    const handleCopyLink = () => {
+        const url = window.location.href;
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            setCopyText('Copied!');
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+            setCopyText('Failed!');
+        }
+        document.body.removeChild(textArea);
+        setTimeout(() => setCopyText('Copy Link'), 2000);
+    };
+
+    // Function to share the project using the Web Share API
+    const handleShare = async () => {
+        const shareData = {
+            title: project.title,
+            text: project.description,
+            url: window.location.href,
+        };
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                console.error('Error sharing:', err);
+            }
+        } else {
+            handleCopyLink();
+        }
+    };
+
+    return (
+        <motion.div 
+            ref={scrollContainerRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm text-white p-4 sm:p-8 overflow-y-auto"
+        >
+            <div className="max-w-4xl mx-auto relative">
+                <div className="sticky top-0 z-10 h-12 flex items-center pointer-events-none">
+                    <AnimatePresence>
+                        {isButtonVisible && (
+                            <motion.button
+                                onClick={onBack}
+                                initial={{ y: '-150%', opacity: 0 }}
+                                animate={{ y: '0%', opacity: 1 }}
+                                exit={{ y: '-150%', opacity: 0 }}
+                                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                className="flex items-center gap-2 text-teal-400 hover:text-teal-300 font-semibold bg-slate-800/50 backdrop-blur-md px-4 py-2 rounded-lg shadow-lg pointer-events-auto"
+                            >
+                                <ArrowLeft size={20} />
+                                Back to Projects
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
+                </div>
+
+                <div className="bg-slate-900 rounded-2xl shadow-2xl shadow-teal-500/20 p-8 -mt-12">
+                    <motion.div 
+                        layoutId={`card-image-${project.title}`}
+                        className="w-full h-64 md:h-96 rounded-xl overflow-hidden mb-8"
+                    >
+                        <img 
+                            src={project.image} 
+                            alt={project.title} 
+                            className="w-full h-full object-cover"
+                            onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/1200x800/0f172a/94a3b8?text=Image+Not+Found'; }}
+                        />
+                    </motion.div>
+
+                    <h1 className="text-4xl md:text-5xl font-black text-white mb-2">{project.title}</h1>
+                    <p className="text-gray-400 text-sm mb-6">
+                        Posted on {new Date(project.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        })}
+                    </p>
+                    
+                    <div className="flex flex-wrap items-center gap-4 mb-8">
+                        <div className="flex flex-wrap gap-2">
+                            {project.tags.map(tag => (
+                                <span key={tag} className="bg-gray-800 text-teal-300 text-xs font-mono px-3 py-1 rounded-full">{tag}</span>
+                            ))}
+                        </div>
+                        <div className="flex gap-2">
+                            <button onClick={handleCopyLink} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors bg-gray-800 px-3 py-1 rounded-full">
+                                <Link size={14} />
+                                {copyText}
+                            </button>
+                            <button onClick={handleShare} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors bg-gray-800 px-3 py-1 rounded-full">
+                                <Share2 size={14} />
+                                Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <div 
+                        className="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: project.longDescription }}
+                    />
+                </div>
+            </div>
+        </motion.div>
+    );
+}
+
+// Main App component to manage state and switch between views
+export default function App() {
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  // This effect handles routing, state changes, and scrolling.
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+
+      // If hash is empty or '#projects', show the grid.
+      if (!hash || hash === 'projects') {
+        setSelectedProject(null);
+        // If the hash is specifically '#projects', scroll to it.
+        if (hash === 'projects') {
+          // Defer scroll to allow the DOM to update after state change.
+          setTimeout(() => {
+            const projectsSection = document.getElementById('projects');
+            if (projectsSection) {
+              projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 50); // A small delay is usually sufficient.
+        }
+      } else {
+        // Otherwise, find the project by its slug and display the detail view.
+        const projectFromHash = projects.find(p => createSlug(p.title) === hash);
+        setSelectedProject(projectFromHash || null);
+      }
+    };
+
+    // Add listener for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Initial check when the component mounts
+    handleHashChange();
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []); // Empty dependency array ensures this effect runs only once on mount.
+
+  // Function to handle selecting a project from the grid
+  const handleSelectProject = (project) => {
+    const slug = createSlug(project.title);
+    window.location.hash = slug;
+    window.dispatchEvent(new CustomEvent('project-detail-view', {
+    detail: { isOpen: true }
+  }));
+  };
+
+  // Function to handle going back to the projects grid
+  const handleGoBack = () => {
+    window.location.hash = 'projects';
+     window.dispatchEvent(new CustomEvent('project-detail-view', {
+    detail: { isOpen: false }
+  }));
+  };
 
   return (
-    <div
-      ref={container}
-      className="h-screen flex items-center justify-center sticky top-0 project-container"
-    >
-      <motion.div
-        style={{
-          scale,
-          top: `calc(-5vh + ${i * 25}px)`,
-          transform: `scale(var(--project-scale, 1))`,
-          marginTop: "var(--project-margin, 0)",
-        }}
-        className="relative -top-[25%] h-auto w-[90%] md:w-[85%] lg:w-[75%] xl:w-[65%] origin-top project-card"
-        whileHover={{
-          y: -8,
-          transition: { duration: 0.3 },
-        }}
-      >
-        {/* Modern split card design */}
-        <div className="w-full flex flex-col md:flex-row bg-zinc-900 rounded-2xl overflow-hidden shadow-xl">
-          {/* Image section - full width on mobile, 55% on desktop */}
-          <div className="w-full md:w-[55%] h-[250px] md:h-[400px] lg:h-[450px] relative overflow-hidden">
-            <motion.img
-              src={url}
-              alt={title}
-              className="w-full h-full object-cover"
-              initial={{ scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-            />
-
-            {/* Colored overlay on hover */}
-            <motion.div
-              className="absolute inset-0"
-              style={{ backgroundColor: color, mixBlendMode: "overlay" }}
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 0.3 }}
-              transition={{ duration: 0.3 }}
-            />
-
-            {/* Project number */}
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-black/50 backdrop-blur-md text-white px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium">
-              Project {i + 1}
-            </div>
-          </div>
-
-          {/* Content section - full width on mobile, 45% on desktop */}
-          <div className="w-full md:w-[45%] p-6 md:p-8 lg:p-10 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-4 md:mb-6">
-                <div
-                  className="w-2 h-2 md:w-3 md:h-3 rounded-full"
-                  style={{ backgroundColor: color }}
+    <div className="bg-slate-950">
+        <ProjectsGrid onProjectSelect={handleSelectProject} />
+        <AnimatePresence>
+            {selectedProject && (
+                <ProjectDetail 
+                    key={selectedProject.title}
+                    project={selectedProject} 
+                    onBack={handleGoBack} 
                 />
-                <div className="h-[1px] w-12 md:w-20 bg-gray-600" />
-              </div>
-
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-4">
-                {title}
-              </h2>
-              <p className="text-sm md:text-base text-gray-400 leading-relaxed line-clamp-3 md:line-clamp-none max-w-md">
-                {description}
-              </p>
-            </div>
-
-            <div className="mt-4 md:mt-auto pt-4">
-              <div className="w-full h-[1px] bg-gray-800 mb-4 md:mb-6" />
-
-              <div className="flex items-center gap-4">
-                {/* GitHub Link */}
-                <motion.a
-                  href={githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2"
-                  whileHover={{ y: -3 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={color}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                  </svg>
-                  <span
-                    className="text-xs md:text-sm font-medium"
-                    style={{ color }}
-                  >
-                    Code
-                  </span>
-                </motion.a>
-
-                {/* Live Link */}
-                <motion.a
-                  href={liveLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-2"
-                  whileHover={{ y: -3 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke={color}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                  </svg>
-                  <span
-                    className="text-xs md:text-sm font-medium"
-                    style={{ color }}
-                  >
-                    Live
-                  </span>
-                </motion.a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+            )}
+        </AnimatePresence>
     </div>
   );
 }
-
-// Add PropTypes validation
-Card.propTypes = {
-  i: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  progress: PropTypes.object.isRequired,
-  range: PropTypes.array.isRequired,
-  targetScale: PropTypes.number.isRequired,
-  githubLink: PropTypes.string.isRequired,
-  liveLink: PropTypes.string.isRequired,
-};

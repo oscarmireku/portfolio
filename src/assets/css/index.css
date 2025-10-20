@@ -144,6 +144,8 @@ pre[class*="language-"] {
   color: #66e7ff !important;
 }
 
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -208,6 +210,12 @@ pre[class*="language-"] {
     @apply bg-background text-foreground;
   }
 }
+
+#contact {
+  scroll-margin-top: 150px;
+}
+
+
 /* Add these classes to adjust the grid colors in the top-left and bottom-right */
 .top-left-grid {
   background-color: white;

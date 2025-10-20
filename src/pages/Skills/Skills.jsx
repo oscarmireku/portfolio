@@ -2,35 +2,27 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import IconCloudDemo from "@/components/globe";
-import { Code2, Paintbrush, Database, Layout, Cpu, Cloud } from "lucide-react";
+import { Network,  Cpu, Cloud,  RouterIcon, ArrowLeftRight, 
+        EthernetPortIcon, LandPlot, BookUserIcon, FolderOpen, 
+        Server, ServerCog, UsersRound, IdCard, CloudDownload, ServerIcon, PrinterIcon, } from "lucide-react";
 import {
-  FaReact,
-  FaNodeJs,
-  FaPython,
-  FaDocker,
-  FaGitAlt,
   FaLinux,
-  FaFigma,
   FaAws,
+  FaMicrosoft,
+  FaCloud,
+  FaWatchmanMonitoring,
 } from "react-icons/fa";
 import {
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiPostgresql,
-  SiMongodb,
-  SiGraphql,
-  SiJest,
-  SiWebpack,
-  SiRedux,
-  SiFirebase,
-  SiVercel,
-  SiVite,
+
+  SiVmware,
+  SiProxmox,
+  SiMacos,
 } from "react-icons/si";
-import { TbBrandVscode } from "react-icons/tb";
-import { BsFileEarmarkCode, BsGrid1X2 } from "react-icons/bs";
-import { MdAnimation } from "react-icons/md";
-import { FcWorkflow } from "react-icons/fc";
+import {  TbCloudDataConnection,  } from "react-icons/tb";
+import { BsActivity,  BsWindows } from "react-icons/bs";
+import { MdAnimation, MdDns, MdHttp, MdHttps, MdOutlineComputer, MdOutlineHardware, MdSecurity, MdTroubleshoot } from "react-icons/md";
+import { FcAddressBook,  } from "react-icons/fc";
+import { Router } from "react-router-dom";
 
 const SkillCard = ({ icon: Icon, title, skills, color }) => (
   <Card className="group relative overflow-hidden bg-gray-900/80 border-gray-700 hover:scale-[1.02] transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20">
@@ -67,157 +59,164 @@ const SkillCard = ({ icon: Icon, title, skills, color }) => (
 const SkillsSection = () => {
   const skillCategories = [
     {
-      icon: Code2,
-      title: "Frontend Development",
-      color: "text-blue-400",
-      skills: [
-        { name: "React", icon: <FaReact className="w-4 h-4 text-[#61DAFB]" /> },
-        {
-          name: "Next.js",
-          icon: <SiNextdotjs className="w-4 h-4 text-white" />,
-        },
-        {
-          name: "TypeScript",
-          icon: <SiTypescript className="w-4 h-4 text-[#3178C6]" />,
-        },
-        {
-          name: "Tailwind CSS",
-          icon: <SiTailwindcss className="w-4 h-4 text-[#38B2AC]" />,
-        },
-        {
-          name: "HTML5",
-          icon: <BsFileEarmarkCode className="w-4 h-4 text-[#E34F26]" />,
-        },
-        {
-          name: "CSS3",
-          icon: <BsFileEarmarkCode className="w-4 h-4 text-[#1572B6]" />,
-        },
-      ],
-    },
-    {
-      icon: Database,
-      title: "Backend Development",
+      icon: Network,
+      title: "Network Infrastructure",
       color: "text-green-400",
       skills: [
+        { name: "Cisco Routers", icon: <RouterIcon className="w-4 h-4 text-[#61DAFB]" /> },
         {
-          name: "Node.js",
-          icon: <FaNodeJs className="w-4 h-4 text-[#339933]" />,
+          name: "Cisco Switches",
+          icon: <ArrowLeftRight className="w-4 h-4 text-white" />,
         },
         {
-          name: "Python",
-          icon: <FaPython className="w-4 h-4 text-[#3776AB]" />,
+          name: "VLANs",
+          icon: <EthernetPortIcon className="w-4 h-4 text-[#3178C6]" />,
         },
         {
-          name: "PostgreSQL",
-          icon: <SiPostgresql className="w-4 h-4 text-[#336791]" />,
+          name: "OSPF",
+          icon: <BsActivity className="w-4 h-4 text-[#38B2AC]" />,
         },
         {
-          name: "MongoDB",
-          icon: <SiMongodb className="w-4 h-4 text-[#47A248]" />,
+          name: "ACLs",
+          icon: <LandPlot className="w-4 h-4 text-[#E34F26]" />,
         },
         {
-          name: "REST APIs",
-          icon: <BsGrid1X2 className="w-4 h-4 text-[#FF6C37]" />,
-        },
-        {
-          name: "GraphQL",
-          icon: <SiGraphql className="w-4 h-4 text-[#E10098]" />,
+          name: "NAT",
+          icon: <BookUserIcon className="w-4 h-4 text-[#1572B6]" />,
         },
       ],
     },
     {
-      icon: Layout,
-      title: "UI/UX Design",
+      icon: FaMicrosoft,
+      title: "Microsoft Technologies",
+      color: "text-blue-400",
+      skills: [
+        {
+          name: "Windows Server",
+          icon: <Server className="w-4 h-4 text-[#339933]" />,
+        },
+        {
+          name: "Active Directory",
+          icon: <FolderOpen className="w-4 h-4 text-[#3776AB]" />,
+        },
+        {
+          name: "Azure",
+          icon: <FaCloud className="w-4 h-4 text-[#336791]" />,
+        },
+        {
+          name: "Microsoft 365",
+          icon: <ServerCog className="w-4 h-4 text-[#47A248]" />,
+        },
+        {
+          name: "GPOs",
+          icon: <UsersRound className="w-4 h-4 text-[#FF6C37]" />,
+        },
+        {
+          name: "Entra ID",
+          icon: <IdCard className="w-4 h-4 text-[#E10098]" />,
+        },
+      ],
+    },
+    {
+      icon: CloudDownload,
+      title: "Cloud Technologies",
       color: "text-purple-400",
       skills: [
-        { name: "Figma", icon: <FaFigma className="w-4 h-4 text-[#F24E1E]" /> },
+        { name: "Azure Services", icon: <Cloud className="w-4 h-4 text-[#F24E1E]" /> },
         {
-          name: "Responsive Design",
-          icon: <Layout className="w-4 h-4 text-[#38B2AC]" />,
+          name: "AWS",
+          icon: <FaAws className="w-4 h-4 text-[#38B2AC]" />,
         },
         {
-          name: "Wireframing",
-          icon: <BsGrid1X2 className="w-4 h-4 text-[#9CA3AF]" />,
+          name: "Hyper-V",
+          icon: <FaMicrosoft className="w-4 h-4 text-[#9CA3AF]" />,
         },
         {
-          name: "Prototyping",
-          icon: <MdAnimation className="w-4 h-4 text-[#F59E0B]" />,
+          name: "VMWare",
+          icon: <SiVmware className="w-4 h-4 text-[#F59E0B]" />,
+        },
+        {
+          name: "Proxmox",
+          icon: <SiProxmox className="w-4 h-4 text-[#C6240B]" />,
+        },
+        {
+          name: "Hybrid Deployment",
+          icon: <MdAnimation className="w-4 h-4 text-[#336791]" />,
         },
       ],
     },
     {
-      icon: Cloud,
-      title: "Cloud & DevOps",
+      icon: BsWindows,
+      title: "Operating Systems",
       color: "text-orange-400",
       skills: [
-        { name: "AWS", icon: <FaAws className="w-4 h-4 text-[#FF9900]" /> },
+        { name: "Windows Server", icon: <ServerIcon className="w-4 h-4 text-[#FF9900]" /> },
         {
-          name: "Docker",
-          icon: <FaDocker className="w-4 h-4 text-[#2496ED]" />,
+          name: "Windows 10/11",
+          icon: <BsWindows className="w-4 h-4 text-[#2496ED]" />,
         },
-        { name: "CI/CD", icon: <FcWorkflow className="w-4 h-4" /> },
-        {
-          name: "Kubernetes",
-          icon: <BsGrid1X2 className="w-4 h-4 text-[#326CE5]" />,
-        },
-        { name: "Git", icon: <FaGitAlt className="w-4 h-4 text-[#F05032]" /> },
+       
+        { name: "macOS", icon: <SiMacos className="w-4 h-4 text-[#F05032]" /> },
         { name: "Linux", icon: <FaLinux className="w-4 h-4 text-[#FCC624]" /> },
       ],
     },
     {
       icon: Cpu,
-      title: "Tools & Technologies",
+      title: "IT Support & Hardware",
       color: "text-pink-400",
       skills: [
         {
-          name: "VS Code",
-          icon: <TbBrandVscode className="w-4 h-4 text-[#007ACC]" />,
+          name: "Troubleshooting",
+          icon: <MdTroubleshoot className="w-4 h-4 text-[#007ACC]" />,
         },
-        { name: "Jest", icon: <SiJest className="w-4 h-4 text-[#C21325]" /> },
+        { name: "Hardware Diagnostics", icon: <MdOutlineHardware className="w-4 h-4 text-[#C21325]" /> },
         {
-          name: "Webpack",
-          icon: <SiWebpack className="w-4 h-4 text-[#8DD6F9]" />,
+          name: "PC Assembly",
+          icon: <MdOutlineComputer className="w-4 h-4 text-[#8DD6F9]" />,
         },
-        { name: "Redux", icon: <SiRedux className="w-4 h-4 text-[#764ABC]" /> },
-        {
-          name: "Firebase",
-          icon: <SiFirebase className="w-4 h-4 text-[#FFCA28]" />,
-        },
-        { name: "Vercel", icon: <SiVercel className="w-4 h-4 text-white" /> },
-        { name: "Vite", icon: <SiVite className="w-4 h-4 text-[#646CFF]" /> },
+        { name: "Printer Support", icon: <PrinterIcon className="w-4 h-4 text-[#764ABC]" /> },
+        
       ],
     },
     {
-      icon: Paintbrush,
-      title: "Creative Skills",
+      icon: MdSecurity,
+      title: "Protocols & Security",
       color: "text-yellow-400",
       skills: [
         {
-          name: "UI Animation",
+          name: "TCP/IP",
           icon: <MdAnimation className="w-4 h-4 text-[#FF4081]" />,
         },
         {
-          name: "SVG Animation",
-          icon: <MdAnimation className="w-4 h-4 text-[#00C853]" />,
+          name: "DNS",
+          icon: <MdDns className="w-4 h-4 text-[#00C853]" />,
         },
         {
-          name: "3D Modeling",
-          icon: <Cpu className="w-4 h-4 text-[#7C4DFF]" />,
+          name: "DHCP",
+          icon: <FcAddressBook className="w-4 h-4 text-[#7C4DFF]" />,
         },
         {
-          name: "Motion Graphics",
-          icon: <MdAnimation className="w-4 h-4 text-[#FF6D00]" />,
+          name: "HTTP/HTTPS",
+          icon: <MdHttps className="w-4 h-4 text-[#FF6D00]" />,
+        },
+        {
+          name: "ACLs",
+          icon: <TbCloudDataConnection className="w-4 h-4 text-[#F59E0B]" />,
+        },
+        {
+          name: "Network Monitoring",
+          icon: <FaWatchmanMonitoring className="w-4 h-4 text-[#F05032]" />,
         },
       ],
     },
   ];
 
   return (
-    <main className="pt-15 lg:pt-0 text-white min-h-screen bg-[#04081A] relative">
+    <main
+    id="skills" className="pt-6 lg:pt-0 text-white min-h-screen bg-[#04081A] relative">
       {/* Grid Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
-
-      <section className="container mx-auto px-4 py-11 relative z-10">
+      <section className="container mx-auto px-4 pt-4 pb-14 relative z-10">
         <div className="flex justify-center items-center ">
           <IconCloudDemo />
         </div>
