@@ -89,7 +89,9 @@ export default function Contact() {
   return (
     <main
       
-       id="contact" className="scroll-mt-40 pt-20 lg:pt-[0rem] bg-[#04081A] text-white min-h-screen"
+       id="contact" 
+       // Updated background and text color
+       className="scroll-mt-40 pt-20 lg:pt-[0rem] bg-background text-foreground min-h-screen"
  
     >
       <section className="hero min-h-screen flex items-center relative px-4 sm:px-6 lg:px-8">
@@ -101,7 +103,9 @@ export default function Contact() {
                 <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                   Get in Touch
                 </h2>
-                <p className="text-gray-300 text-lg">
+                <p 
+                    // Updated text color
+                    className="text-muted-foreground text-lg">
                   Have a question or want to work together? Drop a message!
                 </p>
               </div>
@@ -113,7 +117,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold">Email</h3>
-                    <p className="text-gray-400">oscarsefa@gmail.com</p>
+                    {/* Updated text color */}
+                    <p className="text-muted-foreground">oscarsefa@gmail.com</p> 
                   </div>
                 </div>
 
@@ -123,22 +128,24 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold">Location</h3>
-                    <p className="text-gray-400">Moncton, New Brunswick</p>
+                    {/* Updated text color */}
+                    <p className="text-muted-foreground">Saint John, New Brunswick</p> 
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="backdrop-blur-lg bg-white/5 p-8 rounded-2xl shadow-xl">
+            {/* Updated background */}
+            <div className="backdrop-blur-lg bg-card/50 p-8 rounded-2xl shadow-xl"> 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 gap-6">
                   <div>
                     <input
                       type="text"
                       placeholder="Your Name"
-                      className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.name ? "border-red-500" : "border-gray-700"
+                      className={`w-full px-4 py-3 rounded-lg bg-input/50 border ${ // Updated bg-white/5 to bg-input/50
+                        errors.name ? "border-red-500" : "border-border" // Updated border-gray-700 to border-border
                       } focus:border-blue-500 focus:outline-none transition-colors`}
                       value={formData.name}
                       onChange={(e) =>
@@ -154,8 +161,8 @@ export default function Contact() {
                     <input
                       type="email"
                       placeholder="Your Email"
-                      className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.email ? "border-red-500" : "border-gray-700"
+                      className={`w-full px-4 py-3 rounded-lg bg-input/50 border ${ // Updated bg-white/5 to bg-input/50
+                        errors.email ? "border-red-500" : "border-border" // Updated border-gray-700 to border-border
                       } focus:border-blue-500 focus:outline-none transition-colors`}
                       value={formData.email}
                       onChange={(e) =>
@@ -173,8 +180,8 @@ export default function Contact() {
                     <input
                       type="text"
                       placeholder="Subject"
-                      className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.subject ? "border-red-500" : "border-gray-700"
+                      className={`w-full px-4 py-3 rounded-lg bg-input/50 border ${ // Updated bg-white/5 to bg-input/50
+                        errors.subject ? "border-red-500" : "border-border" // Updated border-gray-700 to border-border
                       } focus:border-blue-500 focus:outline-none transition-colors`}
                       value={formData.subject}
                       onChange={(e) =>
@@ -192,8 +199,8 @@ export default function Contact() {
                     <textarea
                       placeholder="Your Message"
                       rows="4"
-                      className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.message ? "border-red-500" : "border-gray-700"
+                      className={`w-full px-4 py-3 rounded-lg bg-input/50 border ${ // Updated bg-white/5 to bg-input/50
+                        errors.message ? "border-red-500" : "border-border" // Updated border-gray-700 to border-border
                       } focus:border-blue-500 focus:outline-none transition-colors resize-none`}
                       value={formData.message}
                       onChange={(e) =>

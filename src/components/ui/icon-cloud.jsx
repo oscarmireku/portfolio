@@ -23,7 +23,7 @@ export const cloudProps = {
     initial: [0.1, -0.1],
     clickToFront: 500,
     tooltipDelay: 0,
-    outlineColour: "#000",
+    outlineColour: "#a1a1aa", 
     maxSpeed: 0.04,
     minSpeed: 0.02,
     // dragControl: false,
@@ -31,8 +31,13 @@ export const cloudProps = {
 };
 
 export const renderCustomIcon = (icon, theme, imageArray) => {
-  const bgHex = theme === "light" ? "#f3f2ef" : "#080510";
-  const fallbackHex = theme === "light" ? "#6e6e73" : "#ffffff";
+  // Icon Background (Set to match theme background for a clean look)
+  const bgHex = theme === "light" ? "#FFFFFF" : "#0A0A0A"; 
+  
+  // FIX: Light mode icons set to a dark, visible accent blue (#1D4ED8) 
+  // to ensure contrast against the white background.
+  const fallbackHex = theme === "light" ? "#1D4ED8" : "#FFFFFF"; // Dark Blue in Light, Pure White in Dark
+  
   const minContrastRatio = theme === "dark" ? 2 : 1.2;
 
   return renderSimpleIcon({
@@ -69,6 +74,7 @@ export default function IconCloud({
   const renderedIcons = useMemo(() => {
     if (!data) return null;
 
+    // Pass the theme explicitly to ensure the icon color updates
     return Object.values(data.simpleIcons).map((icon) =>
       renderCustomIcon(icon, theme || "dark")
     );

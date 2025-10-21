@@ -15,12 +15,14 @@ const ExperienceCard = ({
   <div 
      className="group relative overflow-hidden transform hover:-translate-y-2 hover:scale-[1.03] transition-all duration-500 ease-out hover:shadow-[0_10px_30px_rgba(0,255,255,0.2)]">
     {/* Glass morphism effect */}
-    <div className="absolute inset-0 backdrop-blur-lg bg-white/5 rounded-lg" />
+    <div className="absolute inset-0 backdrop-blur-lg bg-card/50 rounded-lg" />
 
     {/* Animated gradient border */}
     <div  className="absolute -inset-[2px] bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-lg opacity-0 group-hover:opacity-100 animate-gradient-xy transition-all duration-500" />
 
-    <div  className="relative bg-gray-900/90 rounded-lg p-8 h-full border border-gray-800/50 shadow-xl backdrop-blur-xl">
+    <div  
+        // Updated background and border
+        className="relative bg-card/90 rounded-lg p-8 h-full border border-border/50 shadow-xl backdrop-blur-xl"> 
       {/* Floating icon with pulse effect */}
       <div className="relative mb-6">
         <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-25 rounded-full blur-xl group-hover:opacity-75 animate-pulse transition-all duration-500" />
@@ -32,13 +34,17 @@ const ExperienceCard = ({
         <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
           {title}
         </h3>
-        <div className="flex justify-between items-center text-gray-300">
+        <div 
+            // Updated text color
+            className="flex justify-between items-center text-muted-foreground"> 
           <span className="font-semibold text-blue-400">{company}</span>
           <span className="text-sm font-mono bg-blue-500/10 px-3 py-1 rounded-full">
             {period}
           </span>
         </div>
-        <p className="text-gray-300 border-l-4 border-blue-500/50 pl-4 mt-4 leading-relaxed">
+        <p 
+            // Updated text color
+            className="text-muted-foreground border-l-4 border-blue-500/50 pl-4 mt-4 leading-relaxed"> 
           {description}
         </p>
       </div>
@@ -89,9 +95,10 @@ const ExperienceSection = () => {
       <div id="experience" className="min-h-screen bg-gradient-to-b relative overflow-hidden pt-8 pb-20">
          
         {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-[#04081A]" />
+        {/* Updated background */}
+        <div className="absolute inset-0 bg-background" />
 
-        {/* Grid background */}
+        {/* Grid background (Color in the grid is still dark-mode themed, but can be kept for dramatic effect) */}
         <div  className="absolute inset-0 bg-[linear-gradient(rgba(50,50,70,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(50,50,70,0.15)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
 
         {/* Animated particles */}
@@ -119,7 +126,9 @@ const ExperienceSection = () => {
               </h2>
               <div className="absolute inset-0 -z-10 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-3xl rounded-full" />
             </div>
-            <p className="text-lg md:text-xl text-gray-400 font-medium tracking-wide text-center max-w-2xl">
+            <p 
+                // Updated text color
+                className="text-lg md:text-xl text-muted-foreground font-medium tracking-wide text-center max-w-2xl">
               "Bridging technology and business—one resilient network at a time"
             </p>
           </div>

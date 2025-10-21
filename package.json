@@ -2,7 +2,6 @@
   "name": "react",
   "private": false,
   "version": "0.0.0",
-  "homepage": "https://oscarmireku.github.io/portfolio/",
   "type": "module",
   "scripts": {
     "dev": "vite",

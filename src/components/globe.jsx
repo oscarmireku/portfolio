@@ -19,7 +19,8 @@ const slugs = [
 
 function IconCloudDemo() {
   return (
-    <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg  px-20 pb-20 pt-8 bg-transparent">
+    // FIX: Added 'text-foreground' to ensure the icons inherit the correct theme color
+    <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden rounded-lg  px-20 pb-20 pt-8 bg-transparent text-foreground">
       <IconCloud iconSlugs={slugs} />
     </div>
   );

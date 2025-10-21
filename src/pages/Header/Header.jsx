@@ -9,9 +9,32 @@ import {
   FaEnvelope,
   FaBars,
 } from "react-icons/fa";
+import { Sun, Moon } from "lucide-react"; 
 import { Link as ScrollLink, scroller, Events, scrollSpy } from "react-scroll";
 
+// --- Theme Hook Implementation ---
+const useTheme = () => {
+    const [theme, setTheme] = useState(
+      localStorage.getItem('theme') || 'light' 
+    );
+  
+    useEffect(() => {
+      const root = window.document.documentElement;
+      root.classList.remove('light', 'dark'); 
+      root.classList.add(theme); 
+      localStorage.setItem('theme', theme); 
+    }, [theme]);
+  
+    const toggleTheme = () => {
+      setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+    };
+  
+    return { theme, toggleTheme };
+};
+// ---------------------------------
+
 export default function Header() {
+  const { theme, toggleTheme } = useTheme(); 
   const [activeLink, setActiveLink] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -30,24 +53,19 @@ export default function Header() {
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     const handleScroll = () => {
-      /**const scrollTop = window.scrollY;
-      setScrollY(scrollTop); **/
-
       const sections = ["home", "skills", "projects", "experience", "about", "contact"];
-  for (let section of sections) {
-    const el = document.getElementById(section);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-        setActiveLink(section);
-        break;
+      for (let section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            setActiveLink(section);
+            break;
+          }
+        }
       }
-    }
-  }
-      
     };
     
-
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
 
@@ -57,18 +75,6 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
       Events.scrollEvent.remove("end");
     };
-  }, []);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const target = hash.replace("#", "");
-      setActiveLink(target);
-      const el = document.getElementById(target);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
   }, []);
 
   useEffect(() => {
@@ -114,14 +120,14 @@ export default function Header() {
       className={`fixed top-1 left-0 w-full z-40 transition-transform duration-500 ease-in-out transform ${scrollY > 30 ? "scale-[0.98] shadow-2xl" : "scale-100"} ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <div
-        className="backdrop-blur-sm border border-white/10 shadow-xl rounded-lg mx-auto max-w-fit mt-4 px-4 py-2.5"
-        style={{ backgroundColor: "rgba(17, 24, 39, 0.02)" }}
+        // FINAL GLASS EFFECT: Reduced opacity to '50' for higher transparency and ensured max blur ('backdrop-blur-xl') and strong border/shadow are applied.
+        className="bg-card/50 backdrop-blur-xl border border-border/80 shadow-2xl rounded-2xl mx-auto max-w-fit mt-4 px-6 py-3" 
       >
         <div className="flex justify-between items-center md:hidden px-2">
-          <span className="text-white font-bold">Portfolio</span>
+          <span className="text-foreground font-bold">Portfolio</span>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-white p-2"
+            className="text-foreground p-2" 
           >
             <FaBars />
           </button>
@@ -141,11 +147,11 @@ export default function Header() {
                 hashSpy={true}
                 onSetActive={handleSetActive}
                 className={`px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium transition-all duration-500 ease-in-out flex items-center gap-2 
-                  hover:bg-white/10 hover:scale-105 hover:shadow-md cursor-pointer 
+                  hover:bg-accent hover:scale-105 hover:shadow-md cursor-pointer 
                   ${
                     activeLink === id
                       ? "bg-gradient-to-r from-blue-500 to-teal-400 text-white shadow-lg ring-2 ring-blue-400 hover:scale-110 hover:rotate-1"
-                      : "text-gray-300 hover:text-white"
+                      : "text-muted-foreground hover:text-foreground" 
                   }`}
               >
                 <Icon
@@ -156,6 +162,21 @@ export default function Header() {
                 <span>{text}</span>
               </ScrollLink>
             ))}
+             {/* --- Mode Toggle Button --- */}
+            <button
+              onClick={toggleTheme}
+              className={`px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium transition-all duration-500 ease-in-out flex items-center justify-center 
+                        hover:bg-accent hover:scale-105 hover:shadow-md cursor-pointer 
+                        text-muted-foreground hover:text-foreground`}
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+            {/* --------------------------- */}
           </div>
         </div>
       </div>

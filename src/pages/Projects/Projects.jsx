@@ -4,97 +4,82 @@ import { ArrowLeft, Link, Share2 } from 'lucide-react';
 import { scroller } from "react-scroll";
 
 
-
 // Helper function to create a URL-friendly slug from a title
-const createSlug = (title) => title.toLowerCase().replace(/\s+/g, '-').replace(/[!?,.:;'"()]/g, '');
-
+const createSlug = (title) => title.toLowerCase().replace(/\s+/g, '-').replace(/[!?,.:;"()]/g, '');
 
 
 // Data for the projects, with an added 'longDescription' and 'date' for the detail page.
 const projects = [
   {
-    title: "Olova! A Lightweight JavaScript Library",
-    description: "A lightweight JavaScript library for creating beautiful, responsive UI components.",
-    date: "2025-03-19",
+    title: "Azure Site-to-Site VPN Connection",
+    description: "Configured a secure, resilient VPN between Azure VNet and an on-premises network.",
+    date: "2025-10-20",
     longDescription: `
-        <p>Olova! is a passion project aimed at simplifying front-end development. It provides a set of minimalistic, highly customizable UI components that are easy to integrate into any JavaScript project. The library is built with <strong>performance in mind</strong>, ensuring a small footprint and fast rendering times. The goal was to create a developer-friendly tool that speeds up the creation of elegant user interfaces without the bloat of larger frameworks.</p>
-        <p><em>The core philosophy is to provide unstyled, accessible components that give developers full control over the look and feel.</em></p>
-        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=Component+Code+Snippet" alt="Sample code snippet" class="rounded-lg my-4" />
-        <blockquote>"Olova! strips away the complexity, letting you build beautiful UIs with simple, predictable building blocks."</blockquote>
-        <p>It's not just another component library; it's a statement against the complexity of modern web development. It’s about getting back to basics and writing clean, maintainable code.</p>
+        <p>This project involved setting up a robust, highly available Site-to-Site VPN using Azure Virtual WAN and a simulated on-premises gateway. The primary goal was to ensure seamless, secure communication for hybrid cloud applications and data synchronization. Key technologies utilized included Azure VPN Gateway, BGP routing, and strong encryption protocols (IKEv2).</p>
+        <p><em>The solution provided a secure, cost-effective extension of the corporate network into the cloud.</em></p>
+        <img src="https://placehold.co/1200x800/0f172a/94a3b8?text=VPN+Topology+Diagram" alt="VPN Topology Diagram" class="rounded-lg my-4" />
+        <h3 style="margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700;">Technical Achievements</h3>
+        <ul>
+            <li>Achieved 99.9% uptime for the connection using redundant gateway configurations.</li>
+            <li>Implemented custom routing tables (UDRs) to optimize traffic flow between cloud and on-prem subnets.</li>
+            <li>Automated configuration deployment using Terraform for infrastructure as code (IaC).</li>
+        </ul>
+        <p>This project sharpened my skills in network security, Azure networking services, and automation, providing a deep understanding of hybrid cloud connectivity challenges.</p>
     `,
-    image: "https://i.postimg.cc/DwgWTfP0/Annotation-2025-03-19-113338.png",
-    github: "https://github.com/olovajs/olova",
-    live: "https://olova.js.org/",
-    tags: ["JavaScript", "UI/UX", "Frontend", "Library"]
+    tags: ["Azure Networking", "Site-to-Site VPN", "BGP", "Terraform", "Cloud Security"],
+    image: "https://placehold.co/1200x800/0f172a/94a3b8?text=Azure+VPN"
   },
   {
-    title: "Sleek Portfolio",
-    description: "A sleek portfolio built with React and Tailwind CSS to showcase your skills and projects.",
-    date: "2025-04-01",
+    title: "Active Directory Migration to Azure AD",
+    description: "Successfully migrated 500+ users and groups from on-premises AD to Azure Active Directory.",
+    date: "2025-08-15",
     longDescription: `
-        <p>This portfolio itself is a project designed to showcase my abilities in modern web development. Built with <strong>React</strong>, <strong>Tailwind CSS</strong>, and <em>Framer Motion</em>, it features a clean, responsive design with smooth, engaging animations.</p>
-        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=Portfolio+Animation+Demo" alt="Portfolio animation" class="rounded-lg my-4" />
-        <p>The focus was on creating a visually appealing and easy-to-navigate site that effectively highlights my skills, projects, and professional experience to potential employers and collaborators. Every interaction, from the page transitions to the hover effects, has been carefully crafted to create a delightful user experience.</p>
-        <blockquote>The design is intentionally minimal to let the projects and content speak for themselves.</blockquote>
+        <p>The objective was to modernize identity management by moving from a legacy on-premises Active Directory (AD) to Azure Active Directory (Azure AD) for enhanced security, single sign-on (SSO) capabilities, and simplified user access management. The project utilized Azure AD Connect to synchronize users, groups, and password hashes, followed by a phased rollout of conditional access policies.</p>
+        <img src="https://placehold.co/1200x800/1e293b/94a3b8?text=Azure+AD+Dashboard" alt="Azure AD Dashboard" class="rounded-lg my-4" />
+        <h3 style="margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700;">Key Outcomes</h3>
+        <ul>
+            <li>Implemented Multi-Factor Authentication (MFA) company-wide, reducing phishing risks by over 90%.</li>
+            <li>Enabled Single Sign-On (SSO) for core SaaS applications, improving user experience.</li>
+            <li>Created and enforced Conditional Access policies based on location and device compliance.</li>
+        </ul>
     `,
-    image: "https://i.postimg.cc/J75CKyrs/Annotation-2025-04-01-203959.png",
-    github: "https://github.com/seraprogrammer/portfolio",
-    live: "https://codervai.vercel.app",
-    tags: ["React", "Tailwind CSS", "Framer Motion", "Portfolio"]
+    tags: ["Azure AD", "Identity Management", "SSO", "MFA", "Conditional Access"],
+    image: "https://placehold.co/1200x800/1e293b/94a3b8?text=AD+Migration"
   },
   {
-    title: "CodeWhisperer",
-    description: "A powerful online code editor with real-time code execution and multi-language support.",
-    date: "2025-04-01",
+    title: "Automated VM Patch Management",
+    description: "Developed PowerShell scripts and Azure Automation runbooks for automated patching of 100+ Windows Servers.",
+    date: "2025-06-01",
     longDescription: `
-        <p>CodeWhisperer is an ambitious project to create a versatile online IDE. It supports multiple programming languages with features like syntax highlighting, real-time code execution, and collaborative editing. The backend is powered by a robust containerization system using <strong>Docker</strong> to safely execute user-submitted code, while the frontend communicates in real-time using <strong>Web Sockets</strong>.</p>
-        <p>The frontend, built with React, provides a seamless and intuitive coding environment directly in the browser. <em>It's designed to be fast, responsive, and accessible from any device.</em></p>
-        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=CodeWhisperer+UI" alt="CodeWhisperer Interface" class="rounded-lg my-4" />
-        <blockquote>Future plans include adding support for more languages, version control integration, and a marketplace for extensions.</blockquote>
+        <p>Patching a large fleet of virtual machines (VMs) manually was time-consuming and prone to human error. This project focused on creating a scalable, automated solution using **Azure Automation Update Management**. I authored custom PowerShell DSC (Desired State Configuration) scripts to handle pre- and post-update tasks, ensuring application health checks were performed before and after every patching cycle.</p>
+        <img src="https://placehold.co/1200x800/0f172a/94a3b8?text=PowerShell+Script+Example" alt="PowerShell Script Example" class="rounded-lg my-4" />
+        <h3 style="margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700;">Solution Highlights</h3>
+        <ul>
+            <li>Reduced manual patching time by 80%, allowing the team to focus on strategic tasks.</li>
+            <li>Improved security compliance scores by guaranteeing monthly patching cycles were met.</li>
+            <li>Implemented a change control process integrated with Azure DevOps for tracking approvals.</li>
+        </ul>
     `,
-    image: "https://i.postimg.cc/J4jPVFY0/Annotation-2025-04-01-204723.png",
-    github: "https://github.com/seraprogrammer/codewhisperer",
-    live: "https://codewhisperer.vercel.app/",
-    tags: ["React", "Node.js", "Docker", "Web Sockets", "IDE"]
-  },
-  {
-    title: "CodeKori",
-    description: "A sleek, real-time code editor supporting syntax highlighting and a modern developer UI.",
-    date: "2025-04-01",
-    longDescription: `
-        <p>CodeKori is a lightweight, aesthetically pleasing code editor designed for simplicity and focus. Unlike more complex IDEs, CodeKori prioritizes a <strong>clean interface</strong> and <strong>fast performance</strong>. It's perfect for quick edits, learning new languages, or collaborative coding sessions.</p>
-        <img src="https://placehold.co/800x400/1e293b/94a3b8?text=Theme+Customization" alt="Theme Customization" class="rounded-lg my-4" />
-        <p>It features a modern developer UI with customizable themes and syntax highlighting for several popular languages. <em>The entire experience is designed to be calm and focused, helping you get into a state of flow.</em></p>
-        <blockquote>"I love using CodeKori for my quick coding tasks. It's fast, beautiful, and doesn't get in my way." - A Happy User</blockquote>
-        <p>The project demonstrates a strong understanding of UI/UX principles and frontend performance optimization.</p>
-    `,
-    image: "https://i.postimg.cc/cHQr4fpR/Annotation-2025-04-01-205350.png",
-    github: "https://github.com/seraprogrammer/CodeKori",
-    live: "https://codekori.js.org",
-    tags: ["JavaScript", "Code Editor", "UI/UX", "Real-time"]
-  },
+    tags: ["Azure Automation", "PowerShell", "VM Management", "Patching", "DSC"],
+    image: "https://placehold.co/1200x800/0f172a/94a3b8?text=Automation"
+  }
 ];
+
 
 // Component for the grid of project cards
 function ProjectsGrid({ onProjectSelect }) {
   return (
-    <section id="projects" className="bg-slate-950 text-white py-24 px-6 min-h-screen">
+    <section id="projects" className="bg-background text-foreground py-24 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        <motion.h2 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl font-black text-transparent bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-center mb-12"
-        >
-          PROJECTS
-        </motion.h2>
+        <h2 className="text-4xl lg:text-5xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">
+          Featured Projects
+        </h2>
         <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
               layoutId={`card-container-${project.title}`}
-              className="bg-gray-900/80 rounded-xl shadow-lg overflow-hidden group cursor-pointer flex flex-col"
+              className="bg-card rounded-xl shadow-lg overflow-hidden group cursor-pointer flex flex-col" 
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -102,27 +87,26 @@ function ProjectsGrid({ onProjectSelect }) {
               whileHover={{ scale: 1.03, boxShadow: '0px 10px 30px rgba(0, 255, 255, 0.1)' }}
               onClick={() => onProjectSelect(project)}
             >
-              <div className="overflow-hidden h-56">
-                <motion.img
-                  layoutId={`card-image-${project.title}`}
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/600x400/0f172a/94a3b8?text=Image+Not+Found'; }}
+              <motion.div layoutId={`card-image-${project.title}`} className="w-full h-48 overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => { e.target.onerror = null; e.target.src='https://placehold.co/1200x800/0f172a/94a3b8?text=Image+Not+Found'; }}
                 />
-              </div>
+              </motion.div>
               <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-semibold mb-2 text-white group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-semibold mb-2 text-foreground group-hover:text-blue-400 transition-colors"> 
                   {project.title}
                 </h3>
-                 <p className="text-gray-500 text-xs mb-2">
+                 <p className="text-muted-foreground text-xs mb-2"> 
                     {new Date(project.date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
                     })}
                 </p>
-                <p className="text-gray-400 text-sm mb-4 flex-grow">
+                <p className="text-muted-foreground text-sm mb-4 flex-grow">
                   {project.description}
                 </p>
                 <div className="flex justify-end mt-auto">
@@ -139,83 +123,67 @@ function ProjectsGrid({ onProjectSelect }) {
 
 // Component for the detailed project view (the "blog post" overlay)
 function ProjectDetail({ project, onBack }) {
-    // This effect prevents body scroll and dispatches events for the header
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        // Dispatch event to HIDE the header
-        window.dispatchEvent(new CustomEvent('project-detail-view', { detail: { isOpen: true } }));
-        
-        return () => {
-            document.body.style.overflow = 'unset';
-            // Dispatch event to SHOW the header
-            window.dispatchEvent(new CustomEvent('project-detail-view', { detail: { isOpen: false } }));
-        }; 
-    }, []);
-
-    // State and refs for scroll-based animation
-    const [isButtonVisible, setIsButtonVisible] = useState(true);
-    const lastScrollY = useRef(0);
     const scrollContainerRef = useRef(null);
-
-    // State for the copy button text
+    const [isButtonVisible, setIsButtonVisible] = useState(true);
     const [copyText, setCopyText] = useState('Copy Link');
+    const lastScrollY = useRef(0);
 
-    // Function to handle scroll events on the modal
-    const handleScroll = () => {
-        const container = scrollContainerRef.current;
-        if (container) {
-            const currentScrollY = container.scrollTop;
-            if (currentScrollY < lastScrollY.current || currentScrollY < 100) {
-                setIsButtonVisible(true);
-            } else {
-                setIsButtonVisible(false);
-            }
-            lastScrollY.current = currentScrollY;
-        }
-    };
-
-    // Attach the scroll event listener to the modal
     useEffect(() => {
-        const container = scrollContainerRef.current;
-        if (container) {
-            container.addEventListener('scroll', handleScroll, { passive: true });
-            return () => container.removeEventListener('scroll', handleScroll);
+        // Force scroll to top on mount
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = 0;
+            setIsButtonVisible(true);
         }
-    }, []);
 
-    // Function to copy the project link to the clipboard
-    const handleCopyLink = () => {
-        const url = window.location.href;
-        const textArea = document.createElement('textarea');
-        textArea.value = url;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
-            setCopyText('Copied!');
-        } catch (err) {
-            console.error('Failed to copy: ', err);
-            setCopyText('Failed!');
+        // Logic to show/hide the sticky button based on scroll direction
+        const handleScroll = () => {
+            const container = scrollContainerRef.current;
+            if (container) {
+                const currentScrollY = container.scrollTop;
+                // Show button if scrolling up OR near the top (less than 100px scroll)
+                if (currentScrollY < lastScrollY.current || currentScrollY < 100) {
+                    setIsButtonVisible(true);
+                } else {
+                    // Hide button if scrolling down significantly
+                    setIsButtonVisible(false);
+                }
+                lastScrollY.current = currentScrollY;
+            }
+        };
+
+        const currentRef = scrollContainerRef.current;
+        if (currentRef) {
+            currentRef.addEventListener('scroll', handleScroll, { passive: true });
         }
-        document.body.removeChild(textArea);
-        setTimeout(() => setCopyText('Copy Link'), 2000);
+
+        return () => {
+            if (currentRef) {
+                currentRef.removeEventListener('scroll', handleScroll);
+            }
+        };
+    }, [project]);
+
+    const handleCopyLink = () => {
+        const link = window.location.href;
+        navigator.clipboard.writeText(link).then(() => {
+            setCopyText('Copied!');
+            setTimeout(() => setCopyText('Copy Link'), 2000);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+            setCopyText('Error!');
+            setTimeout(() => setCopyText('Copy Link'), 2000);
+        });
     };
 
-    // Function to share the project using the Web Share API
-    const handleShare = async () => {
-        const shareData = {
-            title: project.title,
-            text: project.description,
-            url: window.location.href,
-        };
+    const handleShare = () => {
         if (navigator.share) {
-            try {
-                await navigator.share(shareData);
-            } catch (err) {
-                console.error('Error sharing:', err);
-            }
+            navigator.share({
+                title: project.title,
+                text: project.description,
+                url: window.location.href,
+            }).catch(err => console.error('Error sharing', err));
         } else {
-            handleCopyLink();
+            alert("Web Share API is not supported in this browser.");
         }
     };
 
@@ -226,7 +194,7 @@ function ProjectDetail({ project, onBack }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm text-white p-4 sm:p-8 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm text-foreground p-4 sm:p-8 overflow-y-auto" 
         >
             <div className="max-w-4xl mx-auto relative">
                 <div className="sticky top-0 z-10 h-12 flex items-center pointer-events-none">
@@ -238,16 +206,18 @@ function ProjectDetail({ project, onBack }) {
                                 animate={{ y: '0%', opacity: 1 }}
                                 exit={{ y: '-150%', opacity: 0 }}
                                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                className="flex items-center gap-2 text-teal-400 hover:text-teal-300 font-semibold bg-slate-800/50 backdrop-blur-md px-4 py-2 rounded-lg shadow-lg pointer-events-auto"
+                                // UPDATED: Added glass effect (bg-card/90 and backdrop-blur-md) and padding
+                                className="flex items-center gap-2 font-semibold bg-card/90 backdrop-blur-md rounded-full shadow-lg border border-border/70 px-4 py-2 hover:border-blue-400 transition-all duration-300
+                                           bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400 pointer-events-auto"
                             >
-                                <ArrowLeft size={20} />
-                                Back to Projects
+                                <ArrowLeft size={20} className="text-blue-400" />
+                                <span className="text-base text-primary">Back to Projects</span>
                             </motion.button>
                         )}
                     </AnimatePresence>
                 </div>
 
-                <div className="bg-slate-900 rounded-2xl shadow-2xl shadow-teal-500/20 p-8 -mt-12">
+                <div className="bg-card rounded-2xl shadow-2xl shadow-teal-500/20 p-8 -mt-12">
                     <motion.div 
                         layoutId={`card-image-${project.title}`}
                         className="w-full h-64 md:h-96 rounded-xl overflow-hidden mb-8"
@@ -260,8 +230,8 @@ function ProjectDetail({ project, onBack }) {
                         />
                     </motion.div>
 
-                    <h1 className="text-4xl md:text-5xl font-black text-white mb-2">{project.title}</h1>
-                    <p className="text-gray-400 text-sm mb-6">
+                    <h1 className="text-4xl md:text-5xl font-black text-foreground mb-2">{project.title}</h1>
+                    <p className="text-muted-foreground text-sm mb-6">
                         Posted on {new Date(project.date).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'long',
@@ -272,15 +242,20 @@ function ProjectDetail({ project, onBack }) {
                     <div className="flex flex-wrap items-center gap-4 mb-8">
                         <div className="flex flex-wrap gap-2">
                             {project.tags.map(tag => (
-                                <span key={tag} className="bg-gray-800 text-teal-300 text-xs font-mono px-3 py-1 rounded-full">{tag}</span>
+                                <span 
+                                    key={tag} 
+                                    className="bg-muted/70 text-blue-400 border border-blue-400/50 text-xs font-mono px-3 py-1 rounded-full"
+                                >
+                                    {tag}
+                                </span>
                             ))}
                         </div>
                         <div className="flex gap-2">
-                            <button onClick={handleCopyLink} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors bg-gray-800 px-3 py-1 rounded-full">
+                            <button onClick={handleCopyLink} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors bg-muted/70 px-3 py-1 rounded-full">
                                 <Link size={14} />
                                 {copyText}
                             </button>
-                            <button onClick={handleShare} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors bg-gray-800 px-3 py-1 rounded-full">
+                            <button onClick={handleShare} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors bg-muted/70 px-3 py-1 rounded-full">
                                 <Share2 size={14} />
                                 Share
                             </button>
@@ -288,7 +263,7 @@ function ProjectDetail({ project, onBack }) {
                     </div>
 
                     <div 
-                        className="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed"
+                        className="prose prose-invert prose-lg max-w-none text-muted-foreground leading-relaxed" 
                         dangerouslySetInnerHTML={{ __html: project.longDescription }}
                     />
                 </div>
@@ -301,44 +276,6 @@ function ProjectDetail({ project, onBack }) {
 export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // This effect handles routing, state changes, and scrolling.
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.substring(1);
-
-      // If hash is empty or '#projects', show the grid.
-      if (!hash || hash === 'projects') {
-        setSelectedProject(null);
-        // If the hash is specifically '#projects', scroll to it.
-        if (hash === 'projects') {
-          // Defer scroll to allow the DOM to update after state change.
-          setTimeout(() => {
-            const projectsSection = document.getElementById('projects');
-            if (projectsSection) {
-              projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          }, 50); // A small delay is usually sufficient.
-        }
-      } else {
-        // Otherwise, find the project by its slug and display the detail view.
-        const projectFromHash = projects.find(p => createSlug(p.title) === hash);
-        setSelectedProject(projectFromHash || null);
-      }
-    };
-
-    // Add listener for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    
-    // Initial check when the component mounts
-    handleHashChange();
-
-    // Cleanup listener on unmount
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-    };
-  }, []); // Empty dependency array ensures this effect runs only once on mount.
-
-  // Function to handle selecting a project from the grid
   const handleSelectProject = (project) => {
     const slug = createSlug(project.title);
     window.location.hash = slug;
@@ -347,7 +284,6 @@ export default function App() {
   }));
   };
 
-  // Function to handle going back to the projects grid
   const handleGoBack = () => {
     window.location.hash = 'projects';
      window.dispatchEvent(new CustomEvent('project-detail-view', {
@@ -355,8 +291,26 @@ export default function App() {
   }));
   };
 
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const projectFromHash = projects.find(p => createSlug(p.title) === hash);
+        setSelectedProject(projectFromHash || null);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+
   return (
-    <div className="bg-slate-950">
+    <div className="bg-background">
         <ProjectsGrid onProjectSelect={handleSelectProject} />
         <AnimatePresence>
             {selectedProject && (
